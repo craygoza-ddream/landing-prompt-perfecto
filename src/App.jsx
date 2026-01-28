@@ -1,215 +1,174 @@
 import React, { useState } from 'react';
 import {
   CheckCircle,
+  XCircle,
   ArrowRight,
   Clock,
   Zap,
   BookOpen,
   ShieldCheck,
+  ChevronDown,
   TrendingUp,
   MessageSquare,
+  Sparkles,
+  Target,
+  FileText
 } from 'lucide-react';
 
+const HOTMART_LINK = 'https://pay.hotmart.com/K103630276Q';
+
 const App = () => {
+  const [activeFaq, setActiveFaq] = useState(null);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
-  // Función para scroll suave a la oferta
   const scrollToOffer = () => {
-    const element = document.getElementById('oferta');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const goToHotmart = () => {
+    window.open(HOTMART_LINK, '_blank');
   };
 
   const modules = [
-    { title: "Módulo 1: Introducción a prompts efectivos", desc: "Entiende cómo 'piensa' la IA para darle instrucciones precisas." },
-    { title: "Módulo 2: La mentalidad del Prompt Engineer", desc: "No busques respuestas, busca soluciones estratégicas." },
-    { title: "Módulo 3: La Fórmula del Prompt Perfecto", desc: "Estructura universal de 4 pasos para cualquier tarea." },
-    { title: "Módulo 4: Prompts para Marketing", desc: "Crea copys, anuncios y estrategias en minutos." },
-    { title: "Módulo 5: Prompts para Ventas", desc: "Scripts de cierre, manejo de objeciones y prospección." },
-    { title: "Módulo 6: Productividad Extrema", desc: "Automatiza reportes, resúmenes y organización de tareas." },
-    { title: "Casos Prácticos y Bonus", desc: "Ejemplos reales aplicados a negocios digitales." }
+    { title: "Introducción a prompts efectivos", desc: "Cómo piensa la IA y cómo darle instrucciones claras." },
+    { title: "Mentalidad del Prompt Engineer", desc: "Dejar de pedir respuestas y empezar a pedir soluciones." },
+    { title: "La Fórmula del Prompt Perfecto", desc: "Framework universal de 4 pasos." },
+    { title: "Prompts para Marketing", desc: "Copys, anuncios y estrategias listas." },
+    { title: "Prompts para Ventas", desc: "Cierres, objeciones y prospección." },
+    { title: "Productividad Extrema", desc: "Automatización y organización diaria." },
+    { title: "Casos prácticos y bonus", desc: "Aplicaciones reales para negocios." }
+  ];
+
+  const faqs = [
+    {
+      q: "¿Necesito saber de IA o programación?",
+      a: "No. Está diseñado para emprendedores. Copias, pegas y aplicas."
+    },
+    {
+      q: "¿Funciona para cualquier negocio?",
+      a: "Sí. Los prompts se adaptan a servicios, productos y creadores."
+    },
+    {
+      q: "¿Cómo recibo el ebook?",
+      a: "Después del pago Hotmart te envía el acceso automático."
+    },
+    {
+      q: "¿Puedo usar los prompts comercialmente?",
+      a: "Sí. Están pensados para usarse con clientes y proyectos reales."
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] font-sans text-[#1E1E1E] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAFAFA] text-[#1E1E1E] overflow-x-hidden">
 
-      {/* --- NAVEGACIÓN --- */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-[#C7D3E3]">
-        <div className="container mx-auto px-4 h-[96px] sm:h-[120px] lg:h-[140px] flex items-center justify-between max-w-6xl">
-          <div className="flex items-center gap-2">
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur z-50 border-b border-[#C7D3E3]">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+          {!logoError ? (
             <img
               src="/logo-iaparaemprendedor-negro.png"
-              alt="Logo IA para Emprendedor"
-              className="h-[150px] w-auto object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const next = e.currentTarget.nextSibling;
-                if (next && next.style) next.style.display = 'block';
-              }}
+              alt="IA para Emprendedor"
+              className="h-8 w-auto object-contain"
+              onError={() => setLogoError(true)}
             />
-            <span className="font-black text-xl tracking-tighter hidden">
+          ) : (
+            <span className="font-black text-sm tracking-tight">
               IA PARA <span className="text-[#1F6FEB]">EMPRENDEDOR</span>
             </span>
-          </div>
+          )}
           <button
             onClick={scrollToOffer}
-            className="bg-[#1F6FEB] text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-[#1F6FEB]/90 transition-all shadow-md shadow-[#1F6FEB]/20"
+            className="bg-[#1F6FEB] text-white px-5 py-2 rounded-lg font-bold"
           >
             Comprar Ebook
           </button>
         </div>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <header className="relative bg-white pt-[120px] sm:pt-32 lg:pt-48 pb-16 lg:pb-36 overflow-hidden border-b border-[#C7D3E3]">
-        {/* Fondo decorativo */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#C7D3E3]/10 -skew-x-12 transform translate-x-1/2" />
+      {/* HERO */}
+      <header className="pt-36 pb-24 bg-white border-b border-[#C7D3E3]">
+        <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h1 className="text-5xl lg:text-7xl font-black mb-6">
+              Domina ChatGPT como un <span className="text-[#1F6FEB]">experto</span>
+            </h1>
+            <p className="text-xl text-slate-600 mb-8">
+              La guía práctica para dejar de improvisar y obtener resultados reales con IA.
+            </p>
 
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            <div className="flex-[1.2] text-center lg:text-left">
-              <span className="inline-block py-1.5 px-4 rounded-full bg-[#C7D3E3] text-[#1F6FEB] font-bold text-xs mb-6 uppercase tracking-[0.2em]">
-                Contenido Digital 2024
-              </span>
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-black leading-[1.05] text-[#1E1E1E] mb-6">
-                Domina ChatGPT como un <span className="text-[#1F6FEB]">experto</span> hoy mismo.
-              </h1>
-              <p className="text-xl text-[#1E1E1E]/70 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
-                La guía práctica que todo emprendedor necesita para dejar de adivinar y empezar a obtener resultados reales con Inteligencia Artificial.
-              </p>
-
-              <div className="grid sm:grid-cols-2 gap-4 mb-10 max-w-lg mx-auto lg:mx-0">
-                {[
-                  "Fórmula de prompts Pro",
-                  "Marketing y Ventas",
-                  "Productividad Real",
-                  "Acceso de por vida"
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-[#FAFAFA] p-3 rounded-xl border border-[#C7D3E3]/50">
-                    <CheckCircle className="text-[#9EFFA9] w-6 h-6 flex-shrink-0" />
-                    <span className="text-[#1E1E1E] font-bold text-sm">{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <button
-                onClick={scrollToOffer}
-                className="w-full sm:w-auto bg-[#1F6FEB] hover:bg-[#1F6FEB]/90 text-white font-black py-5 px-12 rounded-xl text-xl transition-all transform hover:scale-[1.03] shadow-2xl shadow-[#1F6FEB]/30 flex items-center justify-center gap-3 uppercase tracking-tighter"
-              >
-                Comprar por $9 USD
-                <ArrowRight className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* MOCKUP 3D DE LA PORTADA */}
-            <div className="flex-1 relative w-full max-w-sm lg:max-w-md">
-              <div className="relative group" style={{ perspective: '1200px' }}>
-                <div
-                  className="relative transition-transform duration-700 ease-out"
-                  style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-15deg) rotateX(5deg)' }}
-                >
-                  {/* Cuerpo del Libro */}
-                  <div className="relative w-full aspect-[3/4.2] shadow-[30px_40px_60px_-15px_rgba(0,0,0,0.4)] rounded-r-lg flex bg-white">
-                    {/* El Lomo (Spine) */}
-                    <div className="w-[24px] sm:w-[32px] h-full bg-[#1F6FEB] relative z-20 shadow-[inset_-5px_0_15px_rgba(0,0,0,0.4)] flex items-center justify-center">
-                      <div className="w-[1px] h-1/2 bg-white/20" />
-                    </div>
-
-                    {/* La Portada Frontal */}
-                    <div className="flex-1 bg-[#1E1E1E] relative z-10 overflow-hidden rounded-r-sm">
-                      <img
-                        src="/portada-ebook.png"
-                        alt="Ebook Portada"
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-                        onLoad={() => { setImgLoaded(true); setImgError(false); }}
-                        onError={() => { setImgError(true); }}
-                      />
-                      {/* Diseño de Respaldo si falla la imagen */}
-                      {(!imgLoaded || imgError) && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-white text-center bg-gradient-to-b from-[#1E1E1E] to-[#1F6FEB]/30">
-                          <BookOpen className="w-16 h-16 mb-6 text-[#9EFFA9]" />
-                          <h2 className="text-2xl font-black leading-tight uppercase mb-4 tracking-tighter">
-                            EL CÓDIGO DEL PROMPT PERFECTO
-                          </h2>
-                          <div className="h-1.5 w-12 bg-[#9EFFA9] mb-6 rounded-full" />
-                          <p className="font-bold tracking-[0.2em] text-[#C7D3E3] uppercase text-[10px]">
-                            Cargando Portada...
-                          </p>
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent pointer-events-none" />
-                    </div>
-                  </div>
-
-                  {/* Grosor de páginas */}
-                  <div
-                    className="absolute top-[3px] bottom-[3px] -right-[12px] w-[15px] bg-[#E2E8F0] border-y border-r border-[#C7D3E3] z-0"
-                    style={{ transform: 'rotateY(90deg)', transformOrigin: 'left' }}
-                  >
-                    <div
-                      className="w-full h-full opacity-30"
-                      style={{ backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 1px, #1E1E1E 2px)' }}
-                    />
-                  </div>
+            <div className="grid sm:grid-cols-2 gap-4 mb-10">
+              {["Prompts Pro", "Marketing y Ventas", "Productividad", "Acceso vitalicio"].map((t, i) => (
+                <div key={i} className="flex gap-3 bg-white p-3 rounded-xl border">
+                  <CheckCircle className="text-[#1F6FEB]" />
+                  <span className="font-bold">{t}</span>
                 </div>
-
-                {/* Sombra de suelo */}
-                <div className="absolute -bottom-10 left-10 right-0 h-8 bg-black/25 blur-2xl rounded-full -z-10" />
-              </div>
+              ))}
             </div>
 
+            <button
+              onClick={scrollToOffer}
+              className="bg-[#1F6FEB] text-white px-10 py-5 rounded-xl font-black text-xl flex gap-2 items-center"
+            >
+              Obtener por $9 USD <ArrowRight />
+            </button>
+          </div>
+
+          {/* PORTADA */}
+          <div className="relative">
+            <div className="bg-[#1E1E1E] rounded-2xl overflow-hidden shadow-2xl aspect-[3/4]">
+              <img
+                src="/portada-ebook.png"
+                alt="Portada Ebook"
+                className={`w-full h-full object-cover ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setImgLoaded(true)}
+                onError={() => setImgError(true)}
+              />
+              {(imgError || !imgLoaded) && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                  <BookOpen size={48} />
+                  <p className="mt-4 font-bold">EL CÓDIGO DEL PROMPT PERFECTO</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
-      {/* --- EL PROBLEMA --- */}
-      <section className="py-24 bg-[#FAFAFA]">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <h2 className="text-3xl md:text-5xl font-black mb-8 tracking-tight uppercase">
-            ¿ChatGPT te da respuestas genéricas?
-          </h2>
-          <p className="text-xl text-[#1E1E1E]/70 mb-16 max-w-2xl mx-auto font-medium leading-relaxed">
-            La mayoría de las personas usan prompts mediocres y obtienen resultados mediocres. El secreto para ahorrar tiempo es saber exactamente qué pedir.
-          </p>
-          <div className="grid md:grid-cols-2 gap-8 text-left">
+      {/* PROBLEMA */}
+      <section className="py-24">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-black mb-8">El problema no es ChatGPT</h2>
+          <div className="grid md:grid-cols-2 gap-6 text-left">
             {[
-              { icon: <MessageSquare className="w-8 h-8" />, text: "No sabes cómo estructurar las instrucciones." },
-              { icon: <Zap className="w-8 h-8" />, text: "La IA no entiende el contexto de tu negocio." },
-              { icon: <Clock className="w-8 h-8" />, text: "Pierdes horas corrigiendo textos robóticos." },
-              { icon: <TrendingUp className="w-8 h-8" />, text: "Sientes que la IA es 'un juguete' y no una herramienta profesional." }
+              ["Prompts vagos", <MessageSquare />],
+              ["Respuestas genéricas", <Zap />],
+              ["Mucho tiempo perdido", <Clock />],
+              ["Poca claridad", <TrendingUp />]
             ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-white p-8 rounded-2xl flex items-start gap-5 shadow-sm border border-[#C7D3E3] hover:border-[#1F6FEB] transition-all group"
-              >
-                <div className="text-[#1F6FEB] mt-1 group-hover:scale-110 transition-transform">
-                  {item.icon}
-                </div>
-                <p className="text-[#1E1E1E] font-bold text-lg leading-snug">{item.text}</p>
+              <div key={i} className="bg-white p-6 rounded-xl border flex gap-4">
+                <div className="text-[#1F6FEB]">{item[1]}</div>
+                <p className="font-bold">{item[0]}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- MÓDULOS --- */}
-      <section className="py-24 bg-white border-y border-[#C7D3E3]">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tighter italic">
-            ¿Qué aprenderás dentro?
-          </h2>
+      {/* MÓDULOS */}
+      <section className="py-24 bg-white border-y">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-4xl font-black text-center mb-16">Contenido del Ebook</h2>
           <div className="space-y-4">
             {modules.map((m, i) => (
-              <div
-                key={i}
-                className="bg-[#FAFAFA] p-6 rounded-2xl border border-[#C7D3E3] flex items-center gap-6 group hover:border-[#1F6FEB] transition-all"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#1F6FEB] text-white flex items-center justify-center font-black text-xl shrink-0 shadow-lg shadow-[#1F6FEB]/20">
+              <div key={i} className="p-6 bg-[#FAFAFA] rounded-xl border flex gap-6">
+                <div className="w-10 h-10 bg-[#1F6FEB] text-white flex items-center justify-center font-black rounded-full">
                   {i + 1}
                 </div>
                 <div>
-                  <h4 className="font-black text-[#1E1E1E] text-lg">{m.title}</h4>
-                  <p className="text-sm text-[#1E1E1E]/60 font-medium">{m.desc}</p>
+                  <h4 className="font-black">{m.title}</h4>
+                  <p className="text-slate-600 text-sm">{m.desc}</p>
                 </div>
               </div>
             ))}
@@ -217,89 +176,234 @@ const App = () => {
         </div>
       </section>
 
-      {/* --- OFERTA --- */}
-      <section id="oferta" className="py-32 bg-white">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="bg-[#1E1E1E] rounded-[3rem] p-12 lg:p-20 text-center text-white relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(31,111,235,0.4)] border-b-8 border-[#1F6FEB]">
-            <div className="relative z-10">
-              <span className="bg-[#9EFFA9] text-[#1E1E1E] px-6 py-2 rounded-full font-black text-sm mb-8 inline-block uppercase tracking-[0.2em] shadow-lg shadow-[#9EFFA9]/20">
-                Oportunidad Única
-              </span>
-              <h2 className="text-5xl md:text-7xl font-black mb-8 leading-none tracking-tighter">
-                Toma el control
-              </h2>
-              <div className="flex flex-col items-center justify-center mb-12">
-                <span className="text-[#C7D3E3]/40 line-through text-3xl font-bold mb-2">
-                  USD $47.00
-                </span>
-                <div className="flex items-center gap-4">
-                  <span className="text-9xl font-black tracking-tighter text-[#9EFFA9]">
-                    $9
-                  </span>
-                  <div className="flex flex-col items-start leading-none">
-                    <span className="text-3xl font-black text-[#FAFAFA]">USD</span>
-                    <span className="text-sm font-bold text-[#C7D3E3]">Acceso Vitalicio</span>
+      {/* QUÉ LOGRAS EN 30 MIN */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="bg-[#1E1E1E] text-white rounded-3xl p-10 md:p-14 overflow-hidden relative">
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-[#1F6FEB]/20 rounded-full blur-3xl" />
+            <h2 className="text-4xl md:text-5xl font-black mb-10">
+              Lo que vas a poder hacer <span className="text-[#9EFFA9]">en 30 minutos</span>
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              {[ 
+                { icon: <Sparkles className="text-[#9EFFA9]" />, title: 'Prompts reutilizables', desc: 'Crea instrucciones claras que puedes usar una y otra vez sin fallar.' },
+                { icon: <Target className="text-[#9EFFA9]" />, title: 'Respuestas accionables', desc: 'Obtén listas, pasos y scripts listos para ejecutar en tu negocio.' },
+                { icon: <TrendingUp className="text-[#9EFFA9]" />, title: 'IA para marketing y ventas', desc: 'Haz que ChatGPT trabaje como tu asistente de marketing y ventas.' },
+                { icon: <Zap className="text-[#9EFFA9]" />, title: 'Cero improvisación', desc: 'Deja de “probar suerte” y empieza a dirigir a la IA con autoridad.' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="mt-1">{item.icon}</div>
+                  <div>
+                    <h3 className="font-black text-xl mb-1">{item.title}</h3>
+                    <p className="text-slate-300">{item.desc}</p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* QUÉ INCLUYE */}
+      <section className="py-24 bg-[#FAFAFA]">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-black">¿Qué incluye exactamente?</h2>
+            <p className="text-lg text-slate-600 mt-3">Sin relleno. Herramientas prácticas para aplicar hoy.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              '+20 prompts listos para copiar y pegar',
+              'La fórmula universal de 4 pasos (plantilla)',
+              'Ejemplos reales por tipo de negocio',
+              'Plantillas reutilizables para tu día a día',
+              'Bonus: prompts para Reels y TikTok',
+              'Bonus: atención al cliente y respuestas rápidas',
+            ].map((text, i) => (
+              <div key={i} className="bg-white p-5 rounded-xl border flex items-center gap-4">
+                <div className="bg-[#1F6FEB]/10 p-2 rounded-lg">
+                  <FileText className="text-[#1F6FEB] w-5 h-5" />
+                </div>
+                <span className="font-bold">{text}</span>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Link a Hotmart */}
-              <a
-                href="https://pay.hotmart.com/K103630276Q"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full sm:w-auto bg-[#1F6FEB] text-white font-black py-6 px-20 rounded-2xl text-3xl transition-all transform hover:scale-[1.05] shadow-[0_20px_40px_rgba(31,111,235,0.4)] mb-10 uppercase tracking-tighter"
-              >
-                ¡OBTENER EL EBOOK!
-              </a>
+      {/* ANTES / DESPUÉS */}
+      <section className="py-24 bg-white border-y border-[#C7D3E3]">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-12">Antes vs. Después</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-slate-50 p-8 rounded-2xl border">
+              <h3 className="text-2xl font-black mb-6 text-slate-400 flex items-center gap-3">
+                <XCircle className="w-6 h-6" /> Antes
+              </h3>
+              <ul className="space-y-4">
+                {[
+                  'Prompts vagos e incompletos',
+                  'Respuestas genéricas que no sirven',
+                  'Mucha edición manual y pérdida de tiempo',
+                  'Sientes que la IA no entiende tu negocio',
+                ].map((t, i) => (
+                  <li key={i} className="font-bold text-slate-500 line-through decoration-slate-300">{t}</li>
+                ))}
+              </ul>
+            </div>
 
-              <div className="flex flex-wrap justify-center gap-8 text-[#C7D3E3] text-xs font-black uppercase tracking-widest opacity-80">
-                <span className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#9EFFA9]" /> Pago 100% Protegido
-                </span>
-                <span className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-[#9EFFA9]" /> Descarga al Instante
-                </span>
+            <div className="bg-[#1F6FEB]/5 p-8 rounded-2xl border border-[#1F6FEB]/20 relative">
+              <div className="absolute top-4 right-4 bg-[#9EFFA9] text-[#1E1E1E] text-xs font-black py-1 px-3 rounded-full uppercase">Recomendado</div>
+              <h3 className="text-2xl font-black mb-6 text-[#1F6FEB] flex items-center gap-3">
+                <CheckCircle className="w-6 h-6" /> Después
+              </h3>
+              <ul className="space-y-4">
+                {[
+                  'Prompts estructurados con contexto y objetivo',
+                  'Respuestas listas para usar (listas, pasos, scripts)',
+                  'Menos correcciones, más acción',
+                  'Resultados más rápido y con mejor calidad',
+                ].map((t, i) => (
+                  <li key={i} className="font-bold flex items-center gap-3">
+                    <Sparkles className="w-5 h-5 text-[#1F6FEB]" /> {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MINI DEMO */}
+      <section className="py-24 bg-[#FAFAFA]">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-black">Mira la diferencia en acción</h2>
+            <p className="text-lg text-slate-600 mt-3">Un ejemplo rápido para que lo sientas de inmediato.</p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="bg-white rounded-2xl border-l-8 border-red-400 overflow-hidden shadow-sm">
+              <div className="p-4 bg-red-50 text-red-700 font-black text-sm uppercase flex items-center gap-2">
+                <XCircle className="w-4 h-4" /> Prompt vago (error común)
+              </div>
+              <div className="p-6 italic text-slate-500 font-medium">"Dame ideas para mi negocio."</div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowRight className="rotate-90 text-[#1F6FEB] w-8 h-8" />
+            </div>
+
+            <div className="bg-white rounded-2xl border-l-8 border-[#1F6FEB] overflow-hidden shadow-xl">
+              <div className="p-4 bg-[#1F6FEB] text-white font-black text-sm uppercase flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#9EFFA9]" /> Prompt perfecto (estructura)
+              </div>
+              <div className="p-6">
+                <p className="font-black mb-2">[ROL]</p>
+                <p className="text-slate-600 mb-4">Actúa como experto en marketing para negocios locales…</p>
+                <p className="font-black mb-2">[TAREA]</p>
+                <p className="text-slate-600 mb-4">Crea 10 ideas de ofertas + 10 copies cortos para Instagram…</p>
+                <p className="font-black mb-2">[FORMATO]</p>
+                <p className="text-slate-600">Entrégalo en tabla: Oferta | Copy | CTA.</p>
+              </div>
+              <div className="p-4 bg-[#9EFFA9]/20 border-t border-[#1F6FEB]/10 text-[#1F6FEB] font-black text-xs uppercase">
+                Resultado: respuestas claras, accionables y listas para copiar.
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
-      <footer className="py-20 bg-[#1E1E1E] text-[#C7D3E3] border-t border-white/5 font-bold uppercase tracking-widest text-[10px]">
-        <div className="container mx-auto px-4 max-w-6xl text-center">
-          <img
-            src="/logo-iaparaemprendedor-negro.png"
-            alt="Logo Footer"
-            className="h-[150px] w-auto object-contain mb-8 mx-auto invert brightness-0 grayscale opacity-40"
-          />
-          <p className="mb-4">
-            &copy; {new Date().getFullYear()} IA PARA EMPRENDEDOR. Todos los derechos reservados.
-          </p>
-          <div className="flex justify-center gap-8 mb-8 opacity-60">
-            <a href="#" className="hover:text-white transition-colors">Privacidad</a>
-            <a href="#" className="hover:text-white transition-colors">Términos</a>
-            <a
-              href="mailto:soporte@iaparaemprendedor.com"
-              className="hover:text-white transition-colors tracking-normal lowercase text-sm font-medium"
-            >
-              hola@iaparaemprendedor.com
-            </a>
+      {/* PARA QUIÉN ES */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-10">
+            <div>
+              <h2 className="text-4xl font-black mb-8 text-[#1F6FEB]">Para quién SÍ es</h2>
+              <ul className="space-y-5">
+                {[
+                  'Emprendedores y dueños de negocio',
+                  'Freelancers y consultores',
+                  'Creadores de contenido',
+                  'Negocios locales que quieren ahorrar tiempo',
+                ].map((t, i) => (
+                  <li key={i} className="flex gap-3 items-start">
+                    <CheckCircle className="text-[#1F6FEB] mt-0.5" />
+                    <span className="font-bold">{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-2xl border">
+              <h2 className="text-4xl font-black mb-8 text-slate-400">Para quién NO es</h2>
+              <ul className="space-y-5">
+                {[
+                  'Programadores buscando código avanzado',
+                  'Personas que quieren teoría académica',
+                  'Quien no piensa aplicar lo aprendido',
+                ].map((t, i) => (
+                  <li key={i} className="flex gap-3 items-start opacity-80">
+                    <XCircle className="text-red-400 mt-0.5" />
+                    <span className="font-bold text-slate-700">{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      </footer>
+      </section>
 
-      {/* Botón flotante para móvil */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-[#C7D3E3] z-50">
-        <button
-          onClick={scrollToOffer}
-          className="w-full bg-[#1F6FEB] text-white font-black py-4 rounded-xl shadow-xl flex items-center justify-center gap-3 uppercase text-lg italic tracking-tighter"
-        >
-          ¡LO QUIERO POR $9!
-          <ArrowRight className="w-5 h-5" />
-        </button>
-      </div>
+      {/* OFERTA */}
+      <section id="oferta" className="py-32">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-[#1E1E1E] text-white p-16 rounded-3xl text-center">
+            <h2 className="text-5xl font-black mb-8">Obtén el ebook hoy</h2>
+
+            <div className="mb-10">
+              <span className="line-through text-slate-400 text-2xl">USD $47</span>
+              <div className="text-[#9EFFA9] text-8xl font-black">$9</div>
+            </div>
+
+            <button
+              onClick={goToHotmart}
+              className="bg-[#1F6FEB] px-20 py-6 rounded-2xl text-3xl font-black"
+            >
+              COMPRAR AHORA
+            </button>
+
+            <div className="flex justify-center gap-8 mt-8 text-xs uppercase">
+              <span className="flex gap-2"><ShieldCheck /> Pago Seguro</span>
+              <span className="flex gap-2"><CheckCircle /> Acceso Inmediato</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 bg-white">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-4xl font-black text-center mb-16">Preguntas Frecuentes</h2>
+          {faqs.map((f, i) => (
+            <div key={i} className="border rounded-xl mb-4">
+              <button
+                className="w-full p-6 flex justify-between font-bold"
+                onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+              >
+                {f.q}
+                <ChevronDown className={activeFaq === i ? 'rotate-180' : ''} />
+              </button>
+              {activeFaq === i && (
+                <div className="p-6 bg-slate-50">{f.a}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-16 bg-[#1E1E1E] text-slate-400 text-center text-xs">
+        © {new Date().getFullYear()} IA PARA EMPRENDEDOR
+      </footer>
 
     </div>
   );
